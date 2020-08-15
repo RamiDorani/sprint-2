@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>MEME GENERATOR</title>
+</head>
+
+<body onload="onInit()">
+
+    <div class="screen" onclick="toggleMenu()"></div>
+    <header class="main-header">
+        <div class="sub-header flex container align-center space-between">
+            <div class="logo"><img src="images/LOGO.png" alt=""></div>
+            <ul class="main-nav flex align-center clean-list">
+                <li><a href="index.html">Gallery</a></button></li>
+                <li><button onclick="toggleMenu()">About</button></li>
+            </ul>
+            <span class="mobile-menu" onclick="toggleMenu()">☰</span>
+        </div>
+    </header>
+
+
+    <section class="memGen container flex">
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <div class="actions container flex-col">
+            <input type="text" class="text-input" onkeydown="onWriteOnImg(this)" onkeypress="onWriteOnImg(this)"
+                onkeyup="onWriteOnImg(this)" placeholder="Add text...">
+            <div class="first-btn-row">
+                <button class="up-arrow" onclick="onMoveLine(5)"><i class="fas fa-long-arrow-alt-up"></i></button>
+                <button onclick="onMoveLine(-5)"><i class="fas fa-long-arrow-alt-down"></i></button>
+                <button class="newLine" onclick="onWriteTextDown()"><i class="fas fa-plus test"></i></button>
+                <button class="delete" onclick="onClearCanvas()"><i class="fas fa-trash-alt"></i></button>
+            </div>
+            <div class="second-group-btns flex-col space-evenly align-center">
+                <div class="first-row flex">
+                    <button class="input-design" onclick="onIncreaseFontSize()">A+</button>
+                    <button class="input-design" onclick="onDecreaseFontSize()">A-</button>
+                    <button class="input-design" onclick="onSetAlignTxt('right')"><i
+                            class="fas fa-align-left"></i></button>
+                    <button class="input-design" class="input-design" onclick="onSetAlignTxt('center')"><i
+                            class="fas fa-align-center"></i></button>
+                    <button class="input-design" onclick="onSetAlignTxt('left')"><i
+                            class="fas fa-align-right"></i></button>
+                </div>
+                <div class="second-row">
+                    <select onchange="onSetFontFamily(value)" name="fonts" class="fonts-select">
+                        <option value="impact">IMPACT</option>
+                        <option value="comic">COMIC</option>
+                        <option value="pacifico">PACIFICO</option>
+                    </select>
+                    <button onclick="onSave()"><i class="far fa-save"></i></button>
+                    <input type="color" value="#ffffff" onchange="onSetFontColor(value)">
+                </div>
+            </div>
+            <div>
+                <div class="share-section flex justify-center">
+                    <button class="downloadBtn"><a href="#" onclick="onDownloadMeme(this)" download=""><i
+                                class="fas fa-download"></i> Download</a></button>
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                        <input name="img" id="imgData" type="hidden" />
+                        <button class="shareBtn" type="submit"><i class="fas fa-share-alt"></i> Share</button>
+                        <div class="share-container">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="gallery-container container">
+            <div class="serach-bar flex space-evenly align-center">
+                <input onkeydown="searchImg(event)" type="search" class="search-bar" name="search-bar"
+                    placeholder="Search...">
+                <div class="search-words"></div>
+            </div>
+            <div class="img-gallery container"></div>
+        </div>
+    </main>
+</body>
+
+<script src="https://kit.fontawesome.com/1ed641f7ad.js" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/gallery-service.js"></script>
+<script src="js/gen-service.js"></script>
+<script src="js/gallery-controller.js"></script>
+<script src="js/gen-controller.js"></script>
+
+</html>
