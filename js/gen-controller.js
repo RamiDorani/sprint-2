@@ -28,7 +28,6 @@ function drawText() {
     var fontColor = getFontColor()
 
     meme.lines.forEach(line => {
-        line.txt;
         gCtx.lineWidth = '2';
         gCtx.strokeStyle = 'black';
         gCtx.font = `${line.size}px  ${fontName}`;
@@ -42,7 +41,7 @@ function drawText() {
 
 
 function drawImgFromlocal(id) {
-    gId=id;
+    gId = id;
     var images = getImges();
     var imgIdx = getImgById(id);
     var img = new Image();
@@ -52,6 +51,13 @@ function drawImgFromlocal(id) {
     }
 }
 
+function onSwitchLines() {
+    var meme = getMeme();
+    meme.selectedLineIdx= meme.selectedLineIdx === 0 ? meme.lines.length-1 : meme.selectedLineIdx-1;
+    document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt;
+    var currLine=meme.lines[meme.selectedLineIdx];
+    gCtx.strokeText(currLine.txt,currLine.x,currLine.y);
+}
 
 
 
@@ -64,7 +70,7 @@ function getImgById(id) {
 }
 
 function onWriteTextDown() {
-   var elTxtInput = document.querySelector('.text-input');
+    var elTxtInput = document.querySelector('.text-input');
     if (!elTxtInput.value) return;
     elTxtInput.value = '';
     writeTextDown()
@@ -99,6 +105,7 @@ function onSetFontColor(val) {
 
 function onClearCanvas() {
     document.querySelector('.text-input').value = '';
+    gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
     drawImgFromlocal(gId);
 }
 
@@ -108,12 +115,6 @@ function onDownloadMeme(elLink) {
     elLink.download = 'meme-img.jpg';
 }
 
-
-
-function onShare() {
-    var url = "http://google.com";
-    window.open('http://facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
-}
 
 
 function onSave() {
@@ -131,11 +132,10 @@ function uploadImg(elForm, ev) {
     ev.preventDefault();
     document.getElementById('imgData').value = gCanvas.toDataURL("image/jpeg");
 
-    // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
         uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
         document.querySelector('.share-container').innerHTML = `
-        <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
+        <a class="btn" href="www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('//www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
         <div class="social-icons facebook-icon"><i class="fab fa-facebook-f"></i></div>
         </a>`
     }
@@ -148,14 +148,19 @@ function doUploadImg(elForm, onSuccess) {
         method: 'POST',
         body: formData
     })
-    .then(function (res) {
-        return res.text()
-    })
-    .then(onSuccess)
-    .catch(function (err) {
-        console.error(err)
-    })
+        .then(function (res) {
+            return res.text()
+        })
+        .then(onSuccess)
+        .catch(function (err) {
+            console.error(err)
+        })
 }
+
+
+
+
+
 
 
 
