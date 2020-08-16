@@ -16,6 +16,7 @@
             <div class="logo"><img src="images/LOGO.png" alt=""></div>
             <ul class="main-nav flex align-center clean-list">
                 <li><a href="index.html">Gallery</a></button></li>
+                <li><button onclick="toggleMenu()">Memes</button></li>
                 <li><button onclick="toggleMenu()">About</button></li>
             </ul>
             <span class="mobile-menu" onclick="toggleMenu()">☰</span>
@@ -24,12 +25,13 @@
 
 
     <section class="memGen container flex">
-        <canvas id="canvas" width="400" height="400"></canvas>
+        <canvas id="canvas" onclick="" width="400" height="400"></canvas>
         <div class="actions container flex-col">
             <input type="text" class="text-input" onkeydown="onWriteOnImg(this)" onkeypress="onWriteOnImg(this)"
-                onkeyup="onWriteOnImg(this)" placeholder="Add text...">
+                onkeyup="onWriteOnImg(this)" placeholder="Add text..." >
             <div class="first-btn-row flex justify-center align-center">
-                <button class="switchLinesBtn" onclick="onSwitchLines()"><i class="fas fa-long-arrow-alt-up t"></i><i class="fas fa-long-arrow-alt-down"></i></button>
+                <button class="switchLinesBtn" onclick="onSwitchLines()"><i class="fas fa-long-arrow-alt-up t"></i><i
+                        class="fas fa-long-arrow-alt-down"></i></button>
                 <button class="up-arrow" onclick="onMoveLine(5)"><i class="fas fa-long-arrow-alt-up"></i></button>
                 <button onclick="onMoveLine(-5)"><i class="fas fa-long-arrow-alt-down"></i></button>
                 <button class="newLine" onclick="onWriteTextDown()"><i class="fas fa-plus test"></i></button>
@@ -85,7 +87,6 @@
 </body>
 
 <script src="https://kit.fontawesome.com/1ed641f7ad.js" crossorigin="anonymous"></script>
-<script src="js/main.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/gallery-service.js"></script>
 <script src="js/gen-service.js"></script>

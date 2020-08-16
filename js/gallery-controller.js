@@ -1,5 +1,26 @@
 'use strict';
 
+
+var gCanvas;
+var gCtx;
+
+
+
+function onInit() {
+    renderImges();
+    var elMemGen = document.querySelector('.memGen');
+    elMemGen.classList.add('hide');
+
+    gCanvas = document.querySelector('#canvas');
+    gCtx = gCanvas.getContext('2d');
+}
+
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
+}
+
+
+
 function renderImges() {
     let images = getImges();
     var strHTML = images.map(img => {
@@ -23,7 +44,7 @@ function editPic(id) {
 function searchImg(ev) {
     if (ev.key === 'Enter') {
         var elSearchBar = document.querySelector('.search-bar');
-        var searchWord = elSearchBar.value;
+        var searchWord = elSearchBar.value.toLowerCase();
         let images = getImges();
         var imgSearch = images.filter(image => {
             return image.keywords === searchWord;
@@ -59,7 +80,8 @@ function increaseFontSize(word) {
     var x;
     for (x in words) {
         if (x === word) {
-            words[x] += 1;
+            if (words[x] >= 42) return
+            else words[x] += 3;
         }
     }
     saveToStorage(KEY_2, words);

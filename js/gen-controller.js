@@ -1,8 +1,11 @@
 'use strict';
 
-var gDrag = false;
 var gId;
 var gCurrLine;
+var gPosX;
+var gPosY;
+var gTxt;
+
 
 function onWriteOnImg(elem) {
     setMemeText(elem.value);
@@ -26,7 +29,6 @@ function drawText() {
     var meme = getMeme();
     var fontName = getFontFamily();
     var fontColor = getFontColor()
-
     meme.lines.forEach(line => {
         gCtx.lineWidth = '2';
         gCtx.strokeStyle = 'black';
@@ -52,11 +54,8 @@ function drawImgFromlocal(id) {
 }
 
 function onSwitchLines() {
-    var meme = getMeme();
-    meme.selectedLineIdx= meme.selectedLineIdx === 0 ? meme.lines.length-1 : meme.selectedLineIdx-1;
-    document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt;
-    var currLine=meme.lines[meme.selectedLineIdx];
-    gCtx.strokeText(currLine.txt,currLine.x,currLine.y);
+    switchLines();
+    drawText();
 }
 
 
@@ -105,7 +104,7 @@ function onSetFontColor(val) {
 
 function onClearCanvas() {
     document.querySelector('.text-input').value = '';
-    gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImgFromlocal(gId);
 }
 
@@ -144,7 +143,7 @@ function uploadImg(elForm, ev) {
 
 function doUploadImg(elForm, onSuccess) {
     var formData = new FormData(elForm);
-    fetch('http://ca-upload.com/here/upload.php', {
+    fetch('https://ca-upload.com/here/upload.php', {
         method: 'POST',
         body: formData
     })
@@ -156,10 +155,6 @@ function doUploadImg(elForm, onSuccess) {
             console.error(err)
         })
 }
-
-
-
-
 
 
 

@@ -24,6 +24,33 @@ function createMeme(id) {
     };
 }
 
+function writeTextDown() {
+    gMeme.selectedLineIdx = gMeme.lines.length;
+    var lineIdx = gMeme.selectedLineIdx;
+    var yPos;
+    if (lineIdx === 1) yPos = 350;
+    if (lineIdx > 1) yPos = 200;
+    var line = {
+        id: gMeme.lines.length,
+        txt: '',
+        size: 40,
+        align: 'center',
+        x: 200,
+        y: yPos
+    }
+
+    if (gMeme.lines.length === 0) gMeme.lines[0] = line;
+    else gMeme.lines.push(line);
+}
+
+function switchLines() {
+    var meme = getMeme();
+    meme.selectedLineIdx = meme.selectedLineIdx === 0 ? meme.lines.length - 1 : meme.selectedLineIdx - 1;
+    document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt;
+    gCurrLine = meme.selectedLineIdx;
+}
+
+
 function getMeme() {
     return gMeme;
 }
@@ -37,13 +64,14 @@ function setMemeText(txt) {
 }
 
 
-
-
 function setTxtSize(size) {
     gMeme.lines[gMeme.selectedLineIdx].size += size;
 }
 
 function setTxtAlign(alignPos) {
+    if(alignPos==='left')gMeme.lines[gMeme.selectedLineIdx].x=250
+    else if(alignPos==='center')gMeme.lines[gMeme.selectedLineIdx].x=200
+    else if(alignPos==='right')gMeme.lines[gMeme.selectedLineIdx].x=150
     gMeme.lines[gMeme.selectedLineIdx].align = alignPos;
 }
 
@@ -70,30 +98,10 @@ function saveMeme() {
 
 
 
-function writeTextDown() {
-    gMeme.selectedLineIdx = gMeme.lines.length;
-    var lineIdx = gMeme.selectedLineIdx;
-    var yPos;
-    if (lineIdx === 1) yPos = 350;
-    if (lineIdx > 1) yPos = 200;
-    var line = {
-        id: gMeme.lines.length,
-        txt: '',
-        size: 40,
-        align: 'center',
-        x: 200,
-        y: yPos
-    }
-    insertToArray(line)
-}
-
-function insertToArray(newLine) {
-    if (gMeme.lines.length === 0) gMeme.lines[0] = newLine;
-    else gMeme.lines.push(newLine);
-}
-
 function setMoveLine(val) {
     gMeme.lines[gMeme.selectedLineIdx].y -= val;
 }
+
+
 
 
